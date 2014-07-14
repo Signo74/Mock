@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Group id="exampleContent" width="100%" height="70%" top="0" left="0">
+		
+	</s:Group>
+	
+	<s:TextArea id="displayText" width="100%" height="30%" left="0" y="{exampleContent.height}">
+		<s:text>Output text will go here</s:text>
+	</s:TextArea>
+	
+</s:Application>
