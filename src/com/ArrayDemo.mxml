@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:VGroup>
+		<s:HGroup id="arrayLimits">
+			<s:NumericStepper id="startNumber" value="1"/>
+			<s:NumericStepper id="endNumber" value="100"/>
+		</s:HGroup>
+		
+		<s:HGroup id="digitReplacements">
+			<s:TextInput id="replacement1" text="string 1" />
+			<s:TextInput id="replacement2" text="string 2" />
+			<s:TextInput id="replacement3" text="string 3" />
+		</s:HGroup>
+	</s:VGroup>
+</s:Group>
