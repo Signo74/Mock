@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" width="100%" height="100%">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:Group id="exampleContent" width="100%" height="70%" top="0" left="0">
+	<fx:Script>
+		<![CDATA[
+			
+			private function loadArrayDemo():void {				
+			}
+			
+			
+			private function loadSudkoDemo():void {				
+			}
+			
+			
+			private function loadRomanNUmeralsDemo():void {				
+			}
+		]]>
+	</fx:Script>
+	<s:VGroup width="100%" height="100%">
+		<s:BorderContainer  id="exampleContent" width="100%" height="70%" x="0" y="0">			
+		</s:BorderContainer>	
 		
-	</s:Group>
-	
-	<s:TextArea id="displayText" width="100%" height="30%" left="0" y="{exampleContent.height}">
-		<s:text>Output text will go here</s:text>
-	</s:TextArea>
+		<s:HGroup id="demoSwitch" width="100%" height="30">
+			<s:Button id="demo1Button" label="Arrays" click="loadArrayDemo()"/>
+			<s:Button id="demo2Button" label="Sudoku" click="loadSudkoDemo()"/>
+			<s:Button id="demo3Button" label="Roman Numerals" click="loadRomanNUmeralsDemo()"/>
+		</s:HGroup>	
+		
+		<s:TextArea id="displayText" width="100%" height="30%" left="0">
+			<s:text>Output text will go here</s:text>
+		</s:TextArea>	
+	</s:VGroup>
 	
 </s:Application>
