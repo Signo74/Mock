@@ -8,6 +8,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			//displayText.text +=  + "\n"
 			[Bindable]
 			private var arr:Array = [2,3,1,5,6,7,4,0,0,1,2,5,9,12,15,7,7,8,9];
 			[Bindable]
@@ -18,6 +19,8 @@
 			private var streakCount:int = 0;
 			[Bindable]
 			private var streak:Array = new Array;
+			
+			private var sudokuArr:Array = new Array(9);
 			
 			private var localStreakCount:int = 0;
 			private var tempArr:Array = new Array;
@@ -40,8 +43,119 @@
 				}
 			}
 			
+			private function sudokuDemo():void {
+				initSudokuTable(difficulty.value);
+			}
 			
-			private function sudokuDemo():void {				
+			private function initSudokuTable(difficulty:int):void {
+				for (var i:int = 0 ; i < 9 ; i++) {
+					var j:int = 0;
+					var position:int = 0
+					var value:int = 0
+						
+					var randomValueArr:Array = [1,2,3,4,5,6,7,8,9]
+					var posArr:Array = [0,1,2,3,4,5,6,7,8]		
+					var regionArray:Array = new Array(9);
+						
+					if (i == 0) {
+						for (j = 0 ; j < difficulty ; j++) {
+							var pos:int = Math.ceil(Math.random()*posArr.length);
+							var val:int = Math.ceil(Math.random()*randomValueArr.length);
+							position = posArr[pos];
+							value = randomValueArr[val];			
+							
+							regionArray[position] = value;
+							
+							randomValueArr.splice(val, 1);							
+							posArr.splice(pos, 1);
+						}						
+						displayText.text += "regionArray: " + regionArray + "\n"
+					} 
+					else {
+						for (j = 0 ; j < difficulty ; j++) {
+							do {
+								position = posArr[Math.random()*posArr.length];
+								value = randomValueArr[Math.random()*randomValueArr.length];
+							} while (!validateValue(i, value, position));
+							
+							regionArray[position] = randomValueArr[value];
+							
+							randomValueArr = randomValueArr.splice(randomValueArr.indexOf(value), 1);
+							posArr = posArr.splice(randomValueArr.indexOf(position), 1);
+						}
+					}
+					sudokuArr.push(regionArray);
+				}
+			}
+			
+			private function validateValue(region:int, value:int, position:int):Boolean {
+				var i:int;
+				var posStart:int;
+				var posEnd:int;
+				var tempArr:Array;
+				
+				//Row Check
+				if (region >= 3) {
+					i = 3;
+				} else if (region >= 6) {
+					i = 6
+				} else {
+					i = 0
+				} 
+				
+				if (position >= 3) {
+					posStart = 5;
+					posEnd = 3;
+				} else if (position >= 6) {
+					posStart = 8
+					posEnd = 6;
+				} else {
+					posStart = 2
+					posEnd = 0;
+				}
+				
+				for (region ; region > i ; region--) {
+					for (posStart ; posStart > posEnd ; posStart--) {
+						displayText.text += "region: " + region + "\n"
+						displayText.text += "sudokuArr[region]: " + sudokuArr[region] + "\n"
+						tempArr = sudokuArr[region]
+						if (tempArr[posStart] == value) { 
+							return false;
+						}
+					}
+				}
+				
+				//Column check
+				
+				if ((region - 3) == 0 || (region - 6) == 0) {
+					i = 0;
+				} else if ((region - 3) == 1 || (region - 6) == 1) {
+					i = 1
+				} else {
+					i = 2
+				} 
+				
+				if ((position - 3) == 0 || (position - 6) == 0) {
+					posStart = 6;
+					posEnd = 0;
+				} else if ((position - 3) == 1 || (position - 6) == 1) {
+					posStart = 7;
+					posEnd = 1;
+				} else {
+					posStart = 8;
+					posEnd = 2;
+				} 
+				
+				for (region ; region > i ; region -= 3) {
+					for (posStart ; posStart > posEnd ; posStart -= 3) {
+						 tempArr = sudokuArr[region]
+						if (tempArr[posStart] == value) { 
+							return false;
+						}
+					}
+				}
+				
+				return true;
 			}
 			
 			private function nestedArraysDemo(tempArr:Array):void {
@@ -103,7 +217,12 @@
 				</s:VGroup>
 				
 				<s:VGroup id="sudoku">
-					<!--<s:Button id="runSudokuDemo" label="Run!" click="sudokuDemo()"/>--> 
+					<s:HGroup>
+						<s:Label id="difficultyLabel" text="Difficulty:"/>
+						<s:NumericStepper id="difficulty" maximum="9" value="2"/>
+						<s:Button id="runSudokuDemo" label="Run!" click="sudokuDemo()"/>	
+					</s:HGroup>
+					 
 				</s:VGroup>
 				
 				<s:VGroup id="ascendingNumerals" visible="false">
@@ -126,12 +245,13 @@
 				<s:Button id="demo1Button" label="Arrays"/>
 				<s:Button id="demo2Button" label="Sudoku"/>
 				<s:Button id="demo3Button" label="Ascending Numerals"/>
+				<s:Button id="clear" label="Clear" click="{displayText.text = ''}"/>
 			</s:HGroup>	
 			
 		</s:VGroup>
 		
 		<s:TextArea id="displayText" width="50%" height="100%" left="0">
-			<s:text>Output text will go here</s:text>
+			<s:text>Output text will go here \n</s:text>
 		</s:TextArea>
 	</s:HGroup>
 	
